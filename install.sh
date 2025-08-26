@@ -44,15 +44,28 @@ sudo systemctl enable --now NetworkManager
 # -----------------------------------------------------
 # STEP 3: Ensure SDDM
 # -----------------------------------------------------
+
 echo "[*] Installing & enabling SDDM..."
 sudo pacman -S --needed --noconfirm sddm
 sudo systemctl enable sddm.service
+git clone -b main --depth=1 https://github.com/uiriansan/SilentSDDM && cd SilentSDDM && ./install.sh
 
 # -----------------------------------------------------
 # STEP 4: Deploy dotfiles configs
 # -----------------------------------------------------
+#
 echo "[*] Copying configs into ~/.config/ ..."
 mkdir -p "$HOME/.config"
+mkdir -p "$HOME/backup/zsh"
+
+mv "$HOME/.config/hypr" "$HOME/backup"
+mv "$HOME/.config/waybar" "$HOME/backup"
+mv "$HOME/.config/rofi" "$HOME/backup"
+mv "$HOME/.config/kitty" "$HOME/backup"
+mv "$HOME/.config/nvim" "$HOME/backup"
+mv "$HOME/.zshrc" "$HOME/backup/zsh"
+mv "$HOME/.oh-my-zsh" "$HOME/backup/zsh"
+mv "$HOME/powerlevel10k" "$HOME/backup/zsh"
 
 cp -r "$DOTFILES/hyprland" "$HOME/.config/hypr"
 cp -r "$DOTFILES/nvim"     "$HOME/.config/nvim"
@@ -69,35 +82,18 @@ mkdir -p "$WALLPAPERS_DST"
 cp -r "$WALLPAPERS_SRC/"* "$WALLPAPERS_DST/"
 
 # -----------------------------------------------------
-# STEP 7: Zsh Plugins and Theme
-# -----------------------------------------------------
-if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
-    ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-fi
-if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]; then
-  git clone https://github.com/zsh-users/zsh-autosuggestions \
-    ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-fi
-
-if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ]; then
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-    ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-fi
-
-# -----------------------------------------------------
-# STEP 8: Vim-Plug
+# STEP 6: Vim-Plug
 # -----------------------------------------------------
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 # -----------------------------------------------------
-# STEP 9: Fix script permissions
+# STEP 7: Fix script permissions
 # -----------------------------------------------------
 echo "[*] Making scripts executable..."
 chmod +x "$SCRIPTS/"*.sh
 
 # -----------------------------------------------------
-# STEP 9: Final notes
+# STEP 8: Final notes
 # -----------------------------------------------------
 echo "==================================================="
 echo "[*] Setup complete!"
