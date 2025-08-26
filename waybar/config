@@ -95,7 +95,7 @@
     "format-ethernet": "󰈁  Wired",
     "format-disconnected": "󰖪  Disconnected",
     "interval": 10,
-    "tooltip": true
+    "tooltip": true,
 	"on-click": "nmtui"
   },
 

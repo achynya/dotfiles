@@ -20,7 +20,7 @@ repo_desktop=(
   blueman bluez bluez-utils bluez-deprecated-tools
   brightnessctl networkmanager network-manager-applet nm-connection-editor
   wireplumber pipewire pipewire-alsa pipewire-pulse pipewire-jack pavucontrol
-  wl-clipboard xclip xsel
+  wl-clipboard xclip xsel copyq
 )
 
 # === Fonts ===
@@ -30,7 +30,7 @@ repo_fonts=(
 
 # === Terminal & CLI Tools ===
 repo_cli=(
-  zsh vim neovim tmux htop btop calc jq wget fastfetch git github-cli nodejs npm
+  zsh vim neovim tmux htop btop calc jq wget fastfetch git github-cli npm
 )
 
 # === File Managers & Utils ===
